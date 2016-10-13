@@ -67,15 +67,6 @@ class HyperPyCon:
         else:
             return False
             
-    @staticmethod
-    def install_hyperion():
-        if HyperPyCon.amIonOSMC():
-            return -1
-        rc=subprocess.call(["curl","-L","--output","/storage/install_hyperion.sh","--get","https://raw.githubusercontent.com/tvdzwan/hyperion/master/bin/install_hyperion.sh"])
-        if rc!=0:
-            return -2
-        return subprocess.call(["sh", "/storage/install_hyperion.sh"])
-            
     def set_device_type(self,device_type):
         if device_type == HyperPyCon.adalight:
             self.device.type = "adalight"

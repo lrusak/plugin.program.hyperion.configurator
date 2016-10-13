@@ -25,20 +25,14 @@ line2 = "We are about to prepare your hyperion config file in this step-by-step 
 line3 = "You must complete all steps to have the config file generated. Let\'s start!"
 xbmcgui.Dialog().ok(addonname, line1, line2 + line3)
 
-#check if hyperion is installed, if not, install the newest version
+#check if hyperion is installed
 if not HyperPyCon.HyperPyCon.isHyperionInstalled():
     if HyperPyCon.HyperPyCon.amIonOSMC():
         xbmcgui.Dialog().ok(addonname, "Hyperion installation was not detected. Please install manually...")
         sys.exit()
-    xbmcgui.Dialog().ok(addonname, "Hyperion installation was not detected. We will install it now...")
-    rc=HyperPyCon.HyperPyCon.install_hyperion()
-    if rc==-2 :
-        xbmcgui.Dialog().ok(addonname, "Hyperion installation failed. Install script download failed. Please install manually...")
+    else:
+        xbmcgui.Dialog().ok(addonname, "Hyperion installation was not detected. Please install the Hyperion add-on")
         sys.exit()
-    elif rc!=0:
-        xbmcgui.Dialog().ok(addonname, "Installation error... Please install manually...")
-        sys.exit()
-    
 
 try:
     if HyperPyCon.HyperPyCon.amIonOSMC():
