@@ -19,22 +19,11 @@ run_command="/storage/hyperion/bin/hyperiond.sh /storage/.kodi/addons/plugin.pro
 gpio_version=False
 
 import HyperPyCon 
-import AddonGithubUpdater
 
 line1 = "Welcome!"
 line2 = "We are about to prepare your hyperion config file in this step-by-step wizard."
 line3 = "You must complete all steps to have the config file generated. Let\'s start!"
 xbmcgui.Dialog().ok(addonname, line1, line2 + line3)
-
-try:
-    updater=AddonGithubUpdater.AddonGithubUpdater(addon_dir,"LightberryEu","plugin.program.hyperion.configurator")
-    if updater.isUpdateAvailable():
-        if xbmcgui.Dialog().yesno(addonname, "Plugin update is available. Do you want to install new version?"):
-            updater.installUpdate()
-            xbmcgui.Dialog().ok(addonname, "Update installed. Please restart plugin")
-            sys.exit()
-except Exception, e:
-    xbmcgui.Dialog().ok(addonname, "Failed to check the update. Maybe your Pi is not connected to the Internet")
 
 #check if hyperion is installed, if not, install the newest version
 if not HyperPyCon.HyperPyCon.isHyperionInstalled():
