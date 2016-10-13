@@ -62,7 +62,7 @@ class HyperPyCon:
                         
     @staticmethod
     def isHyperionInstalled():
-        if os.path.isdir("/storage/hyperion/bin") or os.path.isdir("/opt/hyperion"):
+        if os.path.isdir("/storage/.kodi/addons/service.hyperion/bin") or os.path.isdir("/opt/hyperion"):
             return True
         else:
             return False
@@ -147,8 +147,8 @@ class HyperPyCon:
         f.close()
 
     def overwrite_default_config(self):
-        if os.path.isdir("/storage/.config"):
-            config_folder = "/storage/.config/"
+        if os.path.isdir("/storage/.kodi/userdata/addon_data/service.hyperion"):
+            config_folder = "/storage/.kodi/userdata/addon_data/service.hyperion/"
         else:
             config_folder = "/etc/"
 
