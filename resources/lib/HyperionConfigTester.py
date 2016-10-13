@@ -11,19 +11,18 @@ class HyperionConfigTester:
 	def __init__(self, chain = None):
 		self.led_chain = chain
 
-		if os.path.isdir("/storage/.config"):
-			self.hyperion_path = "/storage/hyperion/bin/hyperiond.sh"
-			self.config_folder = "/storage/.config/"
-			self.hyperion_remote_path = "/storage/hyperion/bin/hyperion-remote.sh"
+		if os.path.isdir("/storage/.kodi/addons/service.hyperion"):
+			self.hyperion_path = "/storage/.kodi/addons/service.hyperion/bin/hyperiond"
+			self.config_folder = "/storage/.kodi/userdata/addon_data/service.hyperion/"
+			self.hyperion_remote_path = "/storage/.kodi/addons/service.hyperion/bin/hyperion-remote"
 		else: #not tested
 			self.hyperion_path = "hyperiond"
 			self.config_folder = "/etc/"
 			self.hyperion_remote_path = "hyperion-remote"
 			
 	def restart_hyperion(self,hyperion_config_path):
-		if os.path.isdir("/storage/.config"):
-			subprocess.call(["killall", "hyperiond"])
-			subprocess.Popen([self.hyperion_path,hyperion_config_path])
+		if os.path.isdir("/storage/.kodi/addons/service.hyperion"):
+			subprocess.call(["systemctl", "restart", "service.hyperion.service"])
 		else:
 			subprocess.call(["sudo","killall", "hyperiond"])
 			subprocess.Popen(["sudo",self.hyperion_path,hyperion_config_path])
