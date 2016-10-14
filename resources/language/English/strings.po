@@ -1,0 +1,145 @@
+# Kodi Media Center language file
+# Addon Name: Hyperion Configurator
+# Addon id: plugin.program.hyperion.configurator
+msgid ""
+msgstr ""
+
+msgctxt "#30000"
+msgid "Welcome"
+msgstr ""
+
+msgctxt "#30001"
+msgid "We are about to prepare your hyperion config file in this step-by-step wizard"
+msgstr ""
+
+msgctxt "#30002"
+msgid "You must complete all steps to have the config file generated. Let's start"
+msgstr ""
+
+msgctxt "#30010"
+msgid "Hyperion installation was not detected. Please install manually..."
+msgstr ""
+
+msgctxt "#30011"
+msgid "Hyperion installation was not detected. Please install the Hyperion add-on"
+msgstr ""
+
+msgctxt "#30020"
+msgid "You must have killall and lsusb utilities installed on OSMC. Select Yes to have them installed. No will exit the wizard"
+msgstr ""
+
+msgctxt "#30021"
+msgid "Installing..."
+msgstr ""
+
+msgctxt "#30022"
+msgid "Please wait... it can take few minutes..."
+msgstr ""
+
+msgctxt "#30030"
+msgid "Select your led device"
+msgstr ""
+
+msgctxt "#30031"
+msgid "We have detected that your system does not have spi enabled. You can still continue, but leds may not work if you're using GPIO/SPI connection"
+msgstr ""
+
+msgctxt "#30040"
+msgid "In next two steps please provide number of leds at the top edge of tv (horizontally) and number of leds at the side of your tv (count leds at single side only) - vertically"
+msgstr ""
+
+msgctxt "#30041"
+msgid "Select number of leds horizontally"
+msgstr ""
+
+msgctxt "#30042"
+msgid "Select number of leds vertically"
+msgstr ""
+
+msgctxt "#30043"
+msgid "Would you like to download recommended settings for the Lightberry you selected? WARNING: that will overwrite your current addon settings"
+msgstr ""
+
+msgctxt "#30044"
+msgid "Unable to download the settings"
+msgstr ""
+
+msgctxt "#30045"
+msgid "Right/bottom corner and goes up"
+msgstr ""
+
+msgctxt "#30046"
+msgid "Left/bottom corner and goes up"
+msgstr ""
+
+msgctxt "#30047"
+msgid "Center/bottom and goes right"
+msgstr ""
+
+msgctxt "#30048"
+msgid "Center/bottom and goes left"
+msgstr ""
+
+msgctxt "#30049"
+msgid "Select where the led chain starts"
+msgstr ""
+
+msgctxt "#30050"
+msgid "How many leds from the center to the corner or the screen?"
+msgstr ""
+
+msgctxt "#30060"
+msgid "Compatible video grabber has been detected. Do you want to enable video grabber in hyperion?"
+msgstr ""
+
+msgctxt "#30061"
+msgid "Video grabber has been detected but video0 does not exist. Please install drivers or use different disto"
+msgstr ""
+
+msgctxt "#30062"
+msgid "We have not detected the grabber. Grabber-v4l2 section will not be added to the config file."
+msgstr ""
+
+msgctxt "#30070"
+msgid "That's all! Now we will attempt to restart hyperion..."
+msgstr ""
+
+msgctxt "#30071"
+msgid "Have you seen the rainbow swirl? (sometimes it does not appear, if you're sure that correct led type is selected, answer YES anyway, save config as default and reboot)"
+msgstr ""
+
+msgctxt "#30072"
+msgid "Something went wrong... Please try running hyperion from command line to see the error..."
+msgstr ""
+
+msgctxt "#30073"
+msgid "For the next 10 seconds you will see test image and leds should adjust to that image. Check if the leds are showing the right colors in the right places. If not, start this wizard again and provide correct numbers of leds horizontally and vertically."
+msgstr ""
+
+msgctxt "#30080"
+msgid "Do you want to save this config as your default one?"
+msgstr ""
+
+msgctxt "#30081"
+msgid "if No, changes will be lost after hyperion/system restart"
+msgstr ""
+
+msgctxt "#30082"
+msgid "Hyperion is now running with the newly created config. Would you like to restart hyperion with previous config?"
+msgstr ""
+
+msgctxt "#30083"
+msgid "That's all Folks! Enjoy!"
+msgstr ""
+
+msgctxt "#30084"
+msgid "If you'd like to fine tune advanced parameters, please modify addon settings before running it"
+msgstr ""
+
+msgctxt "#30085"
+msgid "You may need to restart your system..."
+msgstr ""
+
+msgctxt "#30086"
+msgid "Please report an error at github issue list"
+msgstr ""
