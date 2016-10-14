@@ -18,20 +18,23 @@ default_config_path="/storage/.config/hyperion.config.json"
 run_command="/storage/hyperion/bin/hyperiond.sh /storage/.kodi/addons/plugin.program.hyperion.configurator-master/hyperion.config.new"
 gpio_version=False
 
-import HyperPyCon 
+import HyperPyCon
 
-line1 = "Welcome!"
-line2 = "We are about to prepare your hyperion config file in this step-by-step wizard."
-line3 = "You must complete all steps to have the config file generated. Let\'s start!"
+def _(code):
+    return addon.getLocalizedString(code)
+
+line1 = _(30000)
+line2 = _(30001)
+line3 = _(30002)
 xbmcgui.Dialog().ok(addonname, line1, line2 + line3)
 
 #check if hyperion is installed
 if not HyperPyCon.HyperPyCon.isHyperionInstalled():
     if HyperPyCon.HyperPyCon.amIonOSMC():
-        xbmcgui.Dialog().ok(addonname, "Hyperion installation was not detected. Please install manually...")
+        xbmcgui.Dialog().ok(addonname, _(30010))
         sys.exit()
     else:
-        xbmcgui.Dialog().ok(addonname, "Hyperion installation was not detected. Please install the Hyperion add-on")
+        xbmcgui.Dialog().ok(addonname, _(30011))
         sys.exit()
 
 try:
@@ -44,9 +47,9 @@ try:
         subprocess.call(["killall", "-help"])
         
 except Exception, e:
-    if xbmcgui.Dialog().yesno(addonname, "You must have killall and lsusb utilities installed on OSMC. Select Yes to have them installed. No will exit the wizard."):
+    if xbmcgui.Dialog().yesno(addonname, _(30020)):
         pDialog = xbmcgui.DialogProgress()
-        pDialog.create('Installing...', 'Please wait... it can take few minutes...')
+        pDialog.create(_(30021), _(30022))
         subprocess.call(["sudo","apt-get","install","-y","psmisc","usbutils"])
         pDialog.close()
     else:
@@ -58,12 +61,12 @@ try:
         device_versions = [ HyperPyCon.HyperPyCon.adalightapa102 , HyperPyCon.HyperPyCon.adalight ]
     else:
         device_versions = [ HyperPyCon.HyperPyCon.adalightapa102 , HyperPyCon.HyperPyCon.adalight,  HyperPyCon.HyperPyCon.ws2801, HyperPyCon.HyperPyCon.apa102]
-    selected_device = xbmcgui.Dialog().select("Select your led device:",device_versions)
+    selected_device = xbmcgui.Dialog().select(_(30030) + ':',device_versions)
     if selected_device == -1:
         sys.exit();
     if selected_device == 2 or selected_device == 3:    
         if "spidev" not in subprocess.check_output(['ls','/dev']):
-            xbmcgui.Dialog().ok(addonname, "We have detected that your system does not have spi enabled. You can still continue, but leds may not work if you're using GPIO/SPI connection")
+            xbmcgui.Dialog().ok(addonname, _(30031))
         gpio_version=True
 
     if selected_device == 0 or selected_device == 3:
@@ -71,12 +74,11 @@ try:
     else:
         suffix = "ws2801"
         
-    xbmcgui.Dialog().ok(addonname, "In next two steps please provide number of leds at the top edge of tv (horizontally)" +
-        "  and number of leds at the side of your tv (count leds at single side only) - horizontally")
+    xbmcgui.Dialog().ok(addonname, _(30040))
 
-    nol_horizontal = xbmcgui.Dialog().input("Select number of leds horizontally","29",xbmcgui.INPUT_NUMERIC)
-    nol_vertical = xbmcgui.Dialog().input("Select number of leds vertically","16",xbmcgui.INPUT_NUMERIC)
-    if xbmcgui.Dialog().yesno(addonname, "Would you like to download recommended settings for the Lightberry you selected? WARNING: that will overwrite your current addon settings!"):
+    nol_horizontal = xbmcgui.Dialog().input(_(30041),"29",xbmcgui.INPUT_NUMERIC)
+    nol_vertical = xbmcgui.Dialog().input(_(30042),"16",xbmcgui.INPUT_NUMERIC)
+    if xbmcgui.Dialog().yesno(addonname, _(30043)):
         try:
             settingsxml = urllib2.urlopen("http://img.lightberry.eu/download/settings.xml-"+suffix).read()
             f = open(addon_dir+"/resources/settings.xml","w")
@@ -85,7 +87,7 @@ try:
             if os.path.isfile(settings_cache_path):
                 os.remove(settings_cache_path)
         except Exception, e:
-            xbmcgui.Dialog().ok(addonname, repr(e),"Couldnt download the settings - Setup will use default.")           
+            xbmcgui.Dialog().ok(addonname, repr(e),_(30044))
     hyperion_configuration = HyperPyCon.HyperPyCon(int(nol_horizontal), int(nol_vertical), 0.08, 0.1) #parameter from plugin settings to be added
     hyperion_configuration.set_device_type(device_versions[selected_device])
     hyperion_configuration.set_device_rate(int(addon.getSetting("rate")))
@@ -103,14 +105,14 @@ try:
        #turn off unused leds if this is GPIO version of Lightberry
        hyperion_configuration.disable_extra_leds(150-hyperion_configuration.total_number_of_leds)
 	
-    options = ["Right/bottom corner and goes up","Left/bottom corner and goes up","Center/bottom and goes right","Center/bottom and goes left"]
-    selected_index = xbmcgui.Dialog().select("Select where the led chain starts:",options)
+    options = [_(30045),_(30046),_(30047),_(30048)]
+    selected_index = xbmcgui.Dialog().select(_(30049),options)
 
     if selected_index == 1:
         hyperion_configuration.led_chain.reverse_direction()
         hyperion_configuration.led_chain.set_offset(int(nol_horizontal))
     elif selected_index == 2 or selected_index == 3:
-        offset = xbmcgui.Dialog().input("How many leds from the center to the corner or the screen?","15",xbmcgui.INPUT_NUMERIC)
+        offset = xbmcgui.Dialog().input(_(30050),"15",xbmcgui.INPUT_NUMERIC)
         if selected_index == 2:
             hyperion_configuration.led_chain.set_offset((-1)*int(offset))
         else:
@@ -127,23 +129,22 @@ try:
 
         if grabber != "":
             if "video0" in subprocess.check_output(['ls','/dev']):
-                if xbmcgui.Dialog().yesno(addonname, "Compatible video grabber has been detected. Do you want to enable video grabber in hyperion?"):
+                if xbmcgui.Dialog().yesno(addonname, _(30060)):
                     hyperion_configuration.config_grabber(grabber)
             else:
-                xbmcgui.Dialog().ok(addonname, "Video grabber has been detected but video0 does not exist. Please install drivers or use different disto")
+                xbmcgui.Dialog().ok(addonname, _(30061))
         else:
-            xbmcgui.Dialog().ok(addonname, "We have not detected the grabber. Grabber-v4l2 section will not be added to the config file.")
+            xbmcgui.Dialog().ok(addonname, _(30062))
             
-    xbmcgui.Dialog().ok(addonname, "That's all! Now we will attempt to restart hyperion...")
+    xbmcgui.Dialog().ok(addonname, _(30070))
     hyperion_configuration.save_config_file(hyperion_configuration.create_config(),new_hyperion_config_path)    
     hyperion_configuration.restart_hyperion(new_hyperion_config_path)
 
-    if not xbmcgui.Dialog().yesno(addonname, "Have you seen the rainbow swirl? (sometimes it does not appear, if you're sure that correct led type is selected, answer YES anyway, save config as default and reboot)"):
-        xbmcgui.Dialog().ok(addonname, "Something went wrong... Please try running hyperion from command line to see the error... ("+run_command+")")
+    if not xbmcgui.Dialog().yesno(addonname, _(30071)):
+        xbmcgui.Dialog().ok(addonname, _(30072))
         sys.exit()
     else:
-        xbmcgui.Dialog().ok(addonname, "For the next 10 seconds you will see test image and leds should adjust to that image. Check if the leds are showing the right colors in the right places."+
-            " If not, start this wizard again and provide correct numbers of leds horizontally and vertically.")
+        xbmcgui.Dialog().ok(addonname, _(30073))
         okno = xbmcgui.WindowDialog(xbmcgui.getCurrentWindowId())
         obrazek = xbmcgui.ControlImage(0,0,1280,720,addon_dir+"/test_picture.png")
         okno.addControl(obrazek)
@@ -154,14 +155,14 @@ try:
         okno.close()
         hyperion_configuration.clear_leds()
 
-    if xbmcgui.Dialog().yesno(addonname, "Do you want to save this config as your default one?","(if No, changes will be lost after hyperion/system restart)"):
+    if xbmcgui.Dialog().yesno(addonname, _(30080),_(30081)):
         hyperion_configuration.overwrite_default_config()
-    elif xbmcgui.Dialog().yesno(addonname, "Hyperion is now running with the newly created config. Would you like to restart hyperion with previous config?"):
+    elif xbmcgui.Dialog().yesno(addonname, _(30082)):
         hyperion_configuration.restart_hyperion(default_config_path)
 
-    xbmcgui.Dialog().ok(addonname, "That\'s all Folks! :) . Enjoy!", "If you'd like to fine tune advanced parameters, please modify addon settings before running it","You may need to restart your system...")
+    xbmcgui.Dialog().ok(addonname, _(30083), _(30084),_(30085))
 
 except Exception, e:
-        xbmcgui.Dialog().ok(addonname, repr(e),"Please report an error at github issue list")
+        xbmcgui.Dialog().ok(addonname, repr(e),_(30086))
 
 
