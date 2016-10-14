@@ -10,7 +10,7 @@ import urllib2
 addon       = xbmcaddon.Addon()
 addonname   = addon.getAddonInfo('name')
 addon_dir = xbmc.translatePath( addon.getAddonInfo('path') )
-sys.path.append(os.path.join( addon_dir, 'resources', 'lib' ) )
+sys.path.append(os.path.join( addon_dir, 'lib' ) )
 new_hyperion_config_path = addon_dir+"/hyperion.config.new"
 hyperion_installation_path="/storage/hyperion/bin"
 settings_cache_path = "/storage/.kodi/userdata/addon_data/plugin.program.hyperion.configurator/settings.xml"
